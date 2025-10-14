@@ -107,7 +107,7 @@
     <ClCompile Include="..\ThirdParty\glad\src\glad.c">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
+    <ClCompile Include="Renderer\Shader.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -229,7 +229,7 @@
     <ClInclude Include="Audio\AudioChannel.h">
       <Filter>Include</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
+    <ClInclude Include="Renderer\Shader.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
