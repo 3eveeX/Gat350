@@ -1,6 +1,7 @@
 
 
 
+
 int main(int argc, char* argv[]) {
     neu::file::SetCurrentDirectory("Assets");
     LOG_INFO("current directory {}", neu::file::GetCurrentDirectory());
@@ -12,11 +13,6 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
-    //OPENGL Initialization
-    /*std::vector<neu::vec3> vertices{ {1, -1, 0}, {-1, -1, 0}, {0, 1, 0} };
-	std::vector<neu::vec3> colors{ {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
-    std::vector<neu::vec2> texcoord{ {0, 0}, {0.5f, 1}, {1, 0} };*/
-
     struct vertex {
         neu::vec3 position;
         neu::vec3 colour;
@@ -24,154 +20,51 @@ int main(int argc, char* argv[]) {
     };
 
     std::vector<vertex> vertices{
-        {{-1, -1, 0}, {0.9, 0, 0}, {0, 0} },
-        {{-1, 1, 0}, {0, 0.75, 0}, {0, 1} },
-        {{1, 1, 0}, {0, 0, 0.25}, {1, 1} },
-        {{1, -1, 0}, {0.5232, 0.55, 0.59}, {1, 0} }
+        {{-1, -1, 0}, {1, 0, 0}, {0, 0} },
+        {{-1, 1, 0}, {0, 1, 0}, {0, 1} },
+        {{1, 1, 0}, {0, 0, 1}, {1, 1} },
+        {{1, -1, 0}, {0, 0, 0}, {1, 0} }
     };
 
-    std::vector<GLuint> indices{
+    std::vector<GLushort> indices{
         0, 1, 2,
         0, 2, 3
 	};
 
-	//vertex buffer
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
+    auto model3d = std::make_shared<neu::Model>();
+    model3d->Load("models/spot.obj");
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex)* vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-	//index buffer
-	GLuint ibo;
-	glGenBuffers(1, &ibo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint)* indices.size(), indices.data(), GL_STATIC_DRAW);
-
-    //vertex array
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-
-	glEnableVertexAttribArray(0); //position
-	glEnableVertexAttribArray(1); //colour
-	glEnableVertexAttribArray(2); //texcoord
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)offsetof(vertex, position));
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)offsetof(vertex, colour));
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)offsetof(vertex, texcoord));
-    /*
-    GLuint vbo[3];
-	glGenBuffers(3, vbo);
-
-	//color buffer
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * colors.size(), colors.data(), GL_STATIC_DRAW);
-
-
-    //vertex buffer (position)
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec3) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-
-    //vertex buffer (texcoord)
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(neu::vec2) * texcoord.size(), texcoord.data(), GL_STATIC_DRAW);
-
-    //vertex array
-    GLuint vao;
-	glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+	
     
+    //shaders
+    /*auto vs_shader = neu::Resources().Get<neu::Shader>("shaders/basic_lit.vert", GL_VERTEX_SHADER);
+    auto fs_shader = neu::Resources().Get<neu::Shader>("shaders/basic_lit.frag", GL_FRAGMENT_SHADER);
+    GLuint vs = vs_shader->m_shader; 
+    GLuint fs = fs_shader->m_shader;*/
 
-	glEnableVertexAttribArray(0); //position
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-    glEnableVertexAttribArray(1); //colour
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-    glEnableVertexAttribArray(2); //texcoord
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-      */
- //   //vertex shader
- //   std::string vs_source;
-	//neu::file::ReadTextFile("Shaders/basic.vert", vs_source);
-	//const char* vs_source_cstr = vs_source.c_str();
-	//GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-	//glShaderSource(vs, 1, &vs_source_cstr, NULL);
-	//glCompileShader(vs);
-
-    int success;
- //   glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
- //   if (!success)
- //   {
- //       std::string infoLog(512, '\0');  // pre-allocate space
- //       GLsizei length;
- //       glGetShaderInfoLog(vs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
- //       infoLog.resize(length);
-
- //       LOG_WARNING("Shader compilation failed: {}", infoLog);
- //   }
-
-	////fragment shader
-	//std::string fs_source;
-	//neu::file::ReadTextFile("Shaders/basic.frag", fs_source);
-	//const char* fs_source_cstr = fs_source.c_str();
-	//GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	//glShaderSource(fs, 1, &fs_source_cstr, NULL);
-	//glCompileShader(fs);
-
- //   glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
- //   if (!success)
- //   {
- //       std::string infoLog(512, '\0');  // pre-allocate space
- //       GLsizei length;
- //       glGetShaderInfoLog(fs, (GLsizei)infoLog.size(), &length, &infoLog[0]);
- //       infoLog.resize(length);
-
- //       LOG_WARNING("Shader compilation failed: {}", infoLog);
- //   }
-
-    auto vs_shader = neu::Resources().Get<neu::Shader>("shaders/basic.vert", GL_VERTEX_SHADER);
-    auto fs_shader = neu::Resources().Get<neu::Shader>("shaders/basic.frag", GL_FRAGMENT_SHADER);
-    GLuint vs = vs_shader->m_shader; // or vs_shader->handle or similar, depending on your Shader class
-    GLuint fs = fs_shader->m_shader; // or fs_shader->handle or similar, depending on your Shader class
-
-	//shader program
-	GLuint shader_program = glCreateProgram();
-	glAttachShader(shader_program, vs);
-	glAttachShader(shader_program, fs);
-	glLinkProgram(shader_program);
-	glUseProgram(shader_program);
+    //program
+	auto program = neu::Resources().Get<neu::Program>("shaders/basic_lit.prog");
+	program->Use();
 
     //texture
-	neu::res_t<neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/beast.png");
+	neu::res_t<neu::Texture> texture = neu::Resources().Get<neu::Texture>("Textures/spot_diffuse.png");
 
     //uniform
-	GLint uniform = glGetUniformLocation(shader_program, "u_time");
+	program->SetUniform("u_texture", 0);
 
-	GLint tex_uniform = glGetUniformLocation(shader_program, "u_texture");
-	ASSERT(tex_uniform != -1);
-	glUniform1i(tex_uniform, 0); //GL_TEXTURE0
+    //lights
+	program->SetUniform("u_ambient_light", glm::vec3{ 0.1f });
+    neu::Transform light{ {2, 4, 0} };
+	
+    //transform
 
+    neu::Transform transform{ {0, 0, 0} };
+    neu::Transform camera{ {0, 0, 5} };
 
-
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        std::string infoLog(512, '\0');  // pre-allocate space
-        GLsizei length;
-        glGetProgramInfoLog(shader_program, (GLsizei)infoLog.size(), &length, &infoLog[0]);
-        infoLog.resize(length);
-
-        LOG_WARNING("Shader link failed: {}", infoLog);
-    }
-
+    //projection matrix
+    float aspect = (float)neu::GetEngine().GetRenderer().GetWidth() / neu::GetEngine().GetRenderer().GetHeight();
+    glm::mat4 projection = glm::perspective(glm::radians(90.0f), aspect, 0.01f, 100.0f);
+    program->SetUniform("u_projection", projection);
 
     // MAIN LOOP
     while (!quit) {
@@ -185,15 +78,49 @@ int main(int argc, char* argv[]) {
         neu::GetEngine().Update();
 
         if (neu::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
+        float dt = neu::GetEngine().GetTime().GetDeltaTime();
 
-		glUniform1f(uniform, neu::GetEngine().GetTime().GetTime());
+		//rotation += dt * 90;
+
+		//model matrix
+		transform.rotation.y += dt * 90.0f;
+        program->SetUniform("u_model", transform.GetMatrix());
+
+
+        // fill in the rest of the controls (WS and QE)
+		//view matrix
+            float speed = 10.0f;
+        if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_A)) camera.position.x += speed * dt;
+        if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_D)) camera.position.x -= speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) camera.position.z -= speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) camera.position.z += speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_Q)) camera.position.y += speed * dt;
+		if (neu::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_E)) camera.position.y -= speed * dt;
+        //eye.x += neu::GetEngine().GetInput().GetMouseDelta().x * -0.01f;
+		glm::mat4 view = glm::lookAt(camera.position, camera.position + glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		program->SetUniform("u_view", view);
+        program->SetUniform("u_light.color", glm::vec3{2.0f, 0.0f, 0.3f});
+		//light.position.x = -5.0f * sinf(20 * neu::GetEngine().GetTime().GetTime());
+		//light.position.z = 5.0f * sinf(neu::GetEngine().GetTime().GetTime());
+		program->SetUniform("u_light.position", (glm::vec3)(view * glm::vec4(light.position, 1)));
+
+       /* program->SetUniform("u_time", neu::GetEngine().GetTime().GetTime());*/
         
-        // draw
+       // draw
         neu::GetEngine().GetRenderer().Clear();
-		glBindVertexArray(vao);
-		//glDrawArrays(GL_TRIANGLES, 0, (GLsizei)vertices.size());
-		glDrawElements(GL_TRIANGLES, (GLsizei)indices.size(), GL_UNSIGNED_INT, 0);
-
+        // start new ImGui frame
+		ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
+        // set ImGui
+        ImGui::Begin("Editor");
+        ImGui::Text("Hello World");
+        ImGui::Text("Press 'Esc' to quit.");
+        ImGui::End();
+        model3d->Draw(GL_TRIANGLES);
+        // draw ImGui
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         neu::GetEngine().GetRenderer().Present();
     }
 
