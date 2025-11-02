@@ -123,6 +123,7 @@ namespace neu {
                 return res_t<T>();  // Return empty shared_ptr on type mismatch
             }
 
+
             // Return the cached resource with correct type
             return resource;
         }
@@ -139,6 +140,7 @@ namespace neu {
 
         // Successfully loaded - add to cache for future use
         // Store as base Resource pointer for type erasure
+        resource->name = key;
         m_resources[key] = resource;
 
         return resource;
