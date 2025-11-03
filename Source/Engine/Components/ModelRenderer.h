@@ -10,6 +10,7 @@ namespace neu {
 		void Draw(class Renderer& renderer) override;
 
 		void Read(const serial_data_t& value);
+		void UpdateGUI() override;
 
 	public:
 		res_t<Model> model;

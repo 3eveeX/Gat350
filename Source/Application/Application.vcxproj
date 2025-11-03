@@ -208,6 +208,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Build\Assets\Materials\Halloween.mat" />
     <None Include="..\..\Build\Assets\Materials\spot.mat" />
     <None Include="..\..\Build\Assets\Scenes\Scene01.json" />
     <None Include="..\..\Build\Assets\Shaders\basic.frag" />
@@ -221,6 +222,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png" />
+    <Image Include="..\..\Build\Assets\Textures\HalloweenTex.png" />
+    <Image Include="..\..\Build\Assets\Textures\HalloweentexMask.png" />
+    <Image Include="..\..\Build\Assets\Textures\spot_diffuse.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

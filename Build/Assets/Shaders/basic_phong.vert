@@ -25,6 +25,7 @@ uniform struct Material{
 } u_material;
 
 
+uniform vec3 u_ambientLight;
 
 void main()
 {

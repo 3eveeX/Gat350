@@ -55,6 +55,11 @@ namespace neu {
             });
     }
 
+    void Scene::UpdateGUI()
+    {
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(m_ambientLight));
+    }
+
     /// <summary>
     /// Draws all actors in the scene using the specified renderer.
     /// 
@@ -118,7 +123,7 @@ namespace neu {
         
         for (auto program : programs) {
             program->Use();
-            program->SetUniform("u_ambientLight", glm::vec3{0.2f});
+            program->SetUniform("u_ambientLight", m_ambientLight);
 			camera->SetProgram(*program);
             if (light) {
                 light->SetProgram(*program, "u_light", camera->view);

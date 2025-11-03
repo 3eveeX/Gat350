@@ -65,9 +65,21 @@
     <None Include="..\..\Build\Assets\Scenes\Scene01.json">
       <Filter>Assets\Scenes</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Materials\Halloween.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\Build\Assets\Textures\HalloweenTex.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\Build\Assets\Textures\HalloweentexMask.png">
+      <Filter>Assets\Textures</Filter>
+    </Image>
+    <Image Include="..\..\Build\Assets\Textures\spot_diffuse.png">
       <Filter>Assets\Textures</Filter>
     </Image>
   </ItemGroup>

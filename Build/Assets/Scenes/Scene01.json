@@ -1,7 +1,7 @@
 {
 	"actors": [
 		{
-			"name": "ball",
+			"name": "tree",
 			"persistent": true,
 			"transform": {
 				"position": [ 0, 0, 0 ],
@@ -11,8 +11,8 @@
 			"components": [
 				{
 					"type": "ModelRenderer",
-					"model": "models/sphere.obj",
-					"material": "materials/spot.mat"
+					"model": "models/Dead_Tree2.fbx",
+					"material": "materials/Halloween.mat"
 				}
 			]
 		},
@@ -21,30 +21,100 @@
 			"persistent": true,
 			"transform": {
 				"position": [ 0, 0, 5 ],
-				"rotation": [ 0, 180, 0 ],
+				"rotation": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
 			"components": [
 				{
 					"type": "CameraComponent"
+				},
+				{
+					"type": "FirstPersonController",
+					"speed": 5,
+					"sensitivity": 0.2
 				}
+
 			]
 		},
 		{
-			"name": "light",
+			"name": "bigwhitecandle",
 			"persistent": true,
 			"transform": {
-				"position": [ 5, 5, 0 ],
+				"position": [ 5, 0, 1 ],
 				"rotation": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
 			"components": [
 				{
 					"type": "LightComponent",
-					"color": [ 1, 1, 0 ]
+					"color": [ 1, 0, 0 ]
+				},
+				{
+					"type": "ModelRenderer",
+					"model": "models/White_Candles_Big.fbx",
+					"material": "materials/Halloween.mat"
+				}
+			]
+		},
+		{
+			"name": "bigblackcandle",
+			"persistent": true,
+			"transform": {
+				"position": [ -5, 0, 1 ],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"color": [ 1, 0, 0 ]
+				},
+				{
+					"type": "ModelRenderer",
+					"model": "models/Black_Candles_Big.fbx",
+					"material": "materials/Halloween.mat"
+				}
+			]
+		},
+		{
+			"name": "smallwhitecandle",
+			"persistent": true,
+			"transform": {
+				"position": [ 8, 0, 2 ],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"color": [ 1, 1, 1 ]
+				},
+				{
+					"type": "ModelRenderer",
+					"model": "models/White_Candles_Small.fbx",
+					"material": "materials/Halloween.mat"
+				}
+			]
+		},
+		{
+			"name": "smallblackcandle",
+			"persistent": true,
+			"transform": {
+				"position": [ -3, 12,1.5 ],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"color": [ 1, 0, 0 ]
+				},
+				{
+					"type": "ModelRenderer",
+					"model": "models/Black_Candles_Small.fbx",
+					"material": "materials/Halloween.mat"
 				}
 			]
 		}
-
 	]
 }
