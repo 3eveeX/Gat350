@@ -84,13 +84,15 @@ namespace neu {
     /// <param name="renderer">The renderer used to draw the actors.</param>
     void Scene::Draw(Renderer& renderer) {
 		//getlight
-		LightComponent* light = nullptr;
+		std::vector<LightComponent*> lights;
 
         for (auto& actor : m_actors) {
             if (!actor->active) continue;
 
-			light = actor->GetComponent<LightComponent>();
-            if (light && light->active) break;
+			auto light = actor->GetComponent<LightComponent>();
+            if (light && light->active) {
+                lights.push_back(light);
+            }
         }
 
         //getcamera
@@ -125,9 +127,11 @@ namespace neu {
             program->Use();
             program->SetUniform("u_ambientLight", m_ambientLight);
 			camera->SetProgram(*program);
-            if (light) {
-                light->SetProgram(*program, "u_light", camera->view);
+			program->SetUniform("u_numLights", static_cast<int>(lights.size()));
+            for (int i = 0; i < lights.size(); i++) {
+                lights[i]->SetProgram(*program, "u_lights[" + std::to_string(i) + "]", camera->view);
 			}
+            
         }
 
         // Iterate through all actors in the scene

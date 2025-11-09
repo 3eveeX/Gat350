@@ -34,23 +34,22 @@ bool neu::Program::Load(const std::string& filename) {
 			return false;
 		}
 		AttachShader(shader);
-
-		// get/add fragment shader
-		std::string shaderName;
-		SERIAL_READ_NAME(document, "fragment_shader", shaderName);
-		if (!shaderName.empty()) {
-			shader = neu::Resources().Get<neu::Shader>(shaderName, GL_FRAGMENT_SHADER);
-			if (!shader) {
-				LOG_WARNING("Could not get fragment shader: {}", shaderName);
-				glDeleteProgram(m_program);
-				m_program = 0;
-
-				return false;
-			}
-			AttachShader(shader);
-		}
 	}
 
+	// get/add fragment shader
+	shaderName;
+	SERIAL_READ_NAME(document, "fragment_shader", shaderName);
+	if (!shaderName.empty()) {
+		auto shader = neu::Resources().Get<neu::Shader>(shaderName, GL_FRAGMENT_SHADER);
+		if (!shader) {
+			LOG_WARNING("Could not get fragment shader: {}", shaderName);
+			glDeleteProgram(m_program);
+			m_program = 0;
+
+			return false;
+		}
+		AttachShader(shader);
+	}
 
 	return Link();
 }

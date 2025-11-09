@@ -4,6 +4,13 @@ namespace neu {
 	class LightComponent : public Component
 	{
 	public:
+		enum LightType
+		{
+			Point,
+			Directional,
+			Spot
+		};
+	public:
 		CLASS_PROTOTYPE(LightComponent)
 
 		void Update(float dt) override;
@@ -14,5 +21,10 @@ namespace neu {
 
 	public:
 		glm::vec3 color{ 1, 1, 1 };
+		float intensity{ 1.0f };
+		float range{ 20.0f };
+		LightType type{ LightType::Point };
+		float outerCutoff{ 15.0f }; // for spot light
+		float innerCutoff{ 12.5f }; // for spot light
 	};
 }
