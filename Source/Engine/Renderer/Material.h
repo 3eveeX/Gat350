@@ -44,6 +44,9 @@ namespace neu {
 		res_t<Cubemap> cubeMap;
 		bool useNormalMap{ false };
 		res_t<Program> program;
+
+		float ior{ 1.0f }; // Index of Refraction for materials like glass
+
 		Parameters parameters{ Parameters::None };
 	};
 }

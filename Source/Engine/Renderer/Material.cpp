@@ -95,6 +95,8 @@ namespace neu
 		program->SetUniform("u_material.tiling", tiling);
 		program->SetUniform("u_material.offset", offset);
 		program->SetUniform("u_material.parameters", (uint32_t)parameters);
+
+		program->SetUniform("u_ior", ior);
 	}
 	void Material::UpdateGUI()
 	{
@@ -110,6 +112,7 @@ namespace neu
 			ImGui::DragFloat("Shininess", &shininess, 1.0f, 2.0f, 256.0f);
 			ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);
 			ImGui::DragFloat2("Offset", glm::value_ptr(offset), 0.1f);
+			ImGui::DragFloat("Index of Refraction", &ior, 0.1f);
 		}
 	}
 }
