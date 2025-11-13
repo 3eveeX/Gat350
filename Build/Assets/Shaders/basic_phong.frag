@@ -1,14 +1,20 @@
 #version 460 core
 
 #define MAX_LIGHTS  5
+
 #define POINT       0
 #define DIRECTIONAL 1
 #define SPOT        2
 
+#define  BASE_MAP     (1 << 0)
+#define  SPECULAR_MAP (1 << 1)
+#define  EMISSIVE_MAP (1 << 2)
+#define  NORMAL_MAP	  (1 << 3)
 in VS_OUT{
      vec2 texcoord;
      vec3 position;
      vec3 normal;
+     mat3 tbn;
 } fs_in;
 
 out vec4 f_color;
@@ -25,13 +31,19 @@ uniform struct Light{
 } u_lights[MAX_LIGHTS];
 
 uniform struct Material{
-    sampler2D baseMap;
+    
     vec3 baseColor;
+    vec3 emissiveColor;
 
     float shininess;
     vec2 tiling;
     vec2 offset;
+    uint parameters;
 } u_material;
+uniform sampler2D u_baseMap;
+uniform sampler2D u_specularMap;
+uniform sampler2D u_emissiveMap;
+uniform sampler2D u_normalMap;
 
 uniform vec3 u_ambientLight;
 uniform sampler2D u_texture;
@@ -97,12 +109,36 @@ switch (light.type){
     return (diffuse + specular)*light.intensity * attenuation;
 }
 
+vec3 calculateNormal()
+{
+	// generate the normals from the normal map
+	vec3 normal = texture(u_normalMap, fs_in.texcoord).rgb;
+	// convert rgb normal (0 <-> 1) to xyz (-1 <-> 1)
+    normal = normalize(normal * 2.0 - 1.0);
+	// transform normals to model view space
+	normal = normalize(fs_in.tbn * normal);
+
+	return normal;
+}
+
 void main()
 {
-    vec3 color = u_ambientLight;
+   
+   
+
+    vec4 emissive = ((u_material.parameters & EMISSIVE_MAP) != 0u) ? 
+    texture(u_emissiveMap, fs_in.texcoord) * vec4(u_material.emissiveColor, 1.0) : vec4(u_material.emissiveColor, 1.0);
+
+    vec3 normal = ((u_material.parameters & NORMAL_MAP) != 0u)
+	? calculateNormal()
+	: fs_in.normal;
+
+	vec3 color = u_ambientLight;
     for(int i = 0; i < u_numLights; i++){
-        color += calculateLight(fs_in.position, fs_in.normal, u_lights[i]);
+        color += calculateLight(fs_in.position, normal, u_lights[i]);
     }
 
-    f_color = texture(u_texture, fs_in.texcoord) * vec4(color, 1);
+    float specularMask = ((u_material.parameters & SPECULAR_MAP) != 0u) ? 
+    texture(u_specularMap, fs_in.texcoord).r : 0.0;
+    f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1.0) + emissive;
 }

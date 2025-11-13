@@ -71,6 +71,24 @@
     <None Include="..\..\Build\Assets\Scenes\Scene02.json">
       <Filter>Assets\Scenes</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Materials\Crate.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\Scene03.json">
+      <Filter>Assets\Scenes</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\skybox.mat">
+      <Filter>Assets\Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\Skybox.frag">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\Skybox.vert">
+      <Filter>Assets\Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\skybox.prog">
+      <Filter>Assets\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png">
