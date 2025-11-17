@@ -1,6 +1,6 @@
 {
 	"program": "Shaders/basic_phong.prog",
-	"baseMap": "Textures/spot_diffuse.png",
+	"baseMap": "Textures/cow.jpg",
 	"baseColor": [ 1, 1, 1 ],
 	"shininess": 2.0,
 	"tiling": [ 1.0, 1.0 ],

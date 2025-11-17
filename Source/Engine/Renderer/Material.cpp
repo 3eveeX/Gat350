@@ -103,11 +103,29 @@ namespace neu
 		if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen)) {
 			ImGui::Text("Name: %s", name.c_str());
 			ImGui::Text("Shader: %s", program ? program->name.c_str() : "None");
-			ImGui::Text("Base Map: %s", baseMap ? baseMap->name.c_str() : "None");
+			
+			if (baseMap) {
+				ImGui::Text("Base Map: %s", baseMap ? baseMap->name.c_str() : "None");
+				Editor::showTexture(*baseMap, 100.0f, 100.0f);
+				Editor::GetDialogResource<Texture>(baseMap, "BaseMapDialog", "Open Texture", "Image (*.png; *.bmp; *.jpeg; *.jpg; *.tga){.png,.bmp,.jpeg,.jpg,.tga},.*");
+			}
 			ImGui::ColorEdit3("Base Color", glm::value_ptr(baseColor));
-			ImGui::Text("Specular Map: %s", specularMap ? specularMap->name.c_str() : "None");
-			ImGui::Text("Emissive Map: %s", emissiveMap ? emissiveMap->name.c_str() : "None");
-			if(normalMap) ImGui::Checkbox("Normal Map", &useNormalMap);
+			if (specularMap) {
+				ImGui::Text("Specular Map: %s", specularMap ? specularMap->name.c_str() : "None");
+				Editor::showTexture(*specularMap, 100.0f, 100.0f);
+				Editor::GetDialogResource<Texture>(specularMap, "SpecularMapDialog", "Open Texture", "Image (*.png; *.bmp; *.jpeg; *.jpg; *.tga){.png,.bmp,.jpeg,.jpg,.tga},.*");
+			}
+			if (emissiveMap) {
+				ImGui::Text("Emissive Map: %s", emissiveMap ? emissiveMap->name.c_str() : "None");
+				Editor::showTexture(*emissiveMap, 100.0f, 100.0f);
+				Editor::GetDialogResource<Texture>(emissiveMap, "EmissiveMapDialog", "Open Texture", "Image (*.png; *.bmp; *.jpeg; *.jpg; *.tga){.png,.bmp,.jpeg,.jpg,.tga},.*");
+			}
+			if (normalMap) {
+				ImGui::Checkbox("Normal Map", &useNormalMap); 
+
+				Editor::showTexture(*normalMap, 100.0f, 100.0f);
+				Editor::GetDialogResource<Texture>(normalMap, "NormalMapDialog", "Open Texture", "Image (*.png; *.bmp; *.jpeg; *.jpg; *.tga){.png,.bmp,.jpeg,.jpg,.tga},.*");
+			}
 			ImGui::ColorEdit3("Emissive Color", glm::value_ptr(emissiveColour));
 			ImGui::DragFloat("Shininess", &shininess, 1.0f, 2.0f, 256.0f);
 			ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);

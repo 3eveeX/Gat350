@@ -37,6 +37,8 @@ namespace neu {
 
 		void Bind() { glBindTexture(m_target, m_texture); }
 
+		void UpdateGUI() override;
+
 		// Allow Renderer class to access the texture for drawing operations
 		friend class Renderer;
 

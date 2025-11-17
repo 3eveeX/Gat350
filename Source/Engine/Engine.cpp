@@ -15,8 +15,8 @@ namespace neu {
         m_renderer->Initialize();
 
         // Create the main application window with default settings
-        // Window title: "Computer Graphics", Resolution: 1280x1024, Windowed mode
-        m_renderer->CreateWindow("Computer Graphics", 1280, 1024, false);
+        // Window title: "Computer Graphics", Resolution: 1920x1080, Windowed mode
+        m_renderer->CreateWindow("Computer Graphics", 1920, 1080, false);
 
         // Initialize input system for handling user interactions
         // Must be initialized after renderer as it may need window context

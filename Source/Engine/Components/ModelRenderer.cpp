@@ -56,7 +56,14 @@ namespace neu
 	}
 	void ModelRenderer::UpdateGUI()
 	{
+		if (model) {
+			ImGui::Text("Model: %s", model->name.c_str());
+			Editor::GetDialogResource<Model>(model, "ModelDialog", "Open Model", "Model (*.obj; *.fbx){.obj,.fbx},.*");
+		}
 		if (material) {
+			ImGui::Text("Material: %s", material->name.c_str());
+			Editor::GetDialogResource<Material>(material, "MaterialDialog", "Open Material", "Material (*.mat){.mat},.*");
+
 			material->UpdateGUI();
 		}
 	}
