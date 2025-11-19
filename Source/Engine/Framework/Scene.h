@@ -154,6 +154,11 @@ namespace neu {
         /// <param name="renderer">Renderer instance used for all drawing operations</param>
         void Draw(class Renderer& renderer);
 
+		void DrawPass(class Renderer& renderer, 
+            std::vector<class Program*>& programs,
+			std::vector<class LightComponent*>& lights,
+			class CameraComponent* camera);
+
         /// <summary>
         /// Adds an actor to the scene with optional immediate initialization.
         /// 
@@ -282,6 +287,10 @@ namespace neu {
         template<typename T = Actor>
             requires std::derived_from<T, Actor>
         std::vector<T*> GetActorsByTag(const std::string& tag);
+
+        template<typename T>
+			requires std::derived_from<T, class Component>
+        std::vector<T*> GetActorComponents();
 
     private:
 		friend class Editor;
@@ -417,5 +426,22 @@ namespace neu {
 
         // Return vector of all actors with matching tag and type
         return results;
+    }
+    template<typename T>
+        requires std::derived_from<T, class Component>
+    inline std::vector<T*> Scene::GetActorComponents()
+    {
+		std::vector<T*> components;
+
+        for (auto& actor : m_actors) {
+            if (!actor->active) continue;
+
+            auto comp = actor->GetComponent<T>();
+            if (comp && comp->active) {
+                components.push_back(comp);
+            }
+        }
+
+        return components;
     }
 }
