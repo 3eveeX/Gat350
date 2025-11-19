@@ -210,10 +210,13 @@
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\Crate.mat" />
     <None Include="..\..\Build\Assets\Materials\Halloween.mat" />
+    <None Include="..\..\Build\Assets\Materials\ogre.mat" />
     <None Include="..\..\Build\Assets\Materials\reflection.mat" />
     <None Include="..\..\Build\Assets\Materials\refraction.mat" />
+    <None Include="..\..\Build\Assets\Materials\rtt.mat" />
     <None Include="..\..\Build\Assets\Materials\skybox.mat" />
     <None Include="..\..\Build\Assets\Materials\spot.mat" />
+    <None Include="..\..\Build\Assets\Materials\squirrel.mat" />
     <None Include="..\..\Build\Assets\Scenes\Scene01.json" />
     <None Include="..\..\Build\Assets\Scenes\Scene02.json" />
     <None Include="..\..\Build\Assets\Scenes\Scene03.json" />
@@ -232,6 +235,9 @@
     <None Include="..\..\Build\Assets\Shaders\Refraction.vert" />
     <None Include="..\..\Build\Assets\Shaders\skybox.prog" />
     <None Include="..\..\Build\Assets\Shaders\Skybox.vert" />
+    <None Include="..\..\Build\Assets\Shaders\unlit.frag" />
+    <None Include="..\..\Build\Assets\Shaders\unlit.prog" />
+    <None Include="..\..\Build\Assets\Shaders\unlit.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Build\Assets\Textures\beast.png" />

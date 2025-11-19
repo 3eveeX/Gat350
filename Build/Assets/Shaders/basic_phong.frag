@@ -140,5 +140,7 @@ void main()
 
     float specularMask = ((u_material.parameters & SPECULAR_MAP) != 0u) ? 
     texture(u_specularMap, fs_in.texcoord).r : 0.0;
-    f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1.0) + emissive;
+    //f_color = texture(u_baseMap, fs_in.texcoord) * vec4(color, 1.0) + emissive;
+
+    f_color = vec4(gl_FragCoord.x/1920, gl_FragCoord.y/1080, gl_FragCoord.z/gl_FragCoord.w, 1.0);
 }

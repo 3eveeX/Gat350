@@ -13,13 +13,15 @@ namespace neu
 
 	void neu::ModelRenderer::Draw(Renderer& renderer)
 	{
-		material->Bind();
-		material->program->SetUniform("u_model", owner->transform.GetMatrix());
-
+		if (material) {
+			material->Bind();
+			material->program->SetUniform("u_model", owner->transform.GetMatrix());
+		}
 		glDepthMask(enableDepth);
 		glCullFace(cullFace);
-
-		model->Draw(GL_TRIANGLES);
+		if (model) {
+			model->Draw(GL_TRIANGLES);
+		}
 	}
 
 	void neu::ModelRenderer::Read(const serial_data_t& value)
@@ -56,14 +58,17 @@ namespace neu
 	}
 	void ModelRenderer::UpdateGUI()
 	{
-		if (model) {
-			ImGui::Text("Model: %s", model->name.c_str());
-			Editor::GetDialogResource<Model>(model, "ModelDialog", "Open Model", "Model (*.obj; *.fbx){.obj,.fbx},.*");
-		}
-		if (material) {
-			ImGui::Text("Material: %s", material->name.c_str());
-			Editor::GetDialogResource<Material>(material, "MaterialDialog", "Open Material", "Material (*.mat){.mat},.*");
+		std::string text;
 
+		text = (model) ? model->name : "ModelRenderer";
+		ImGui::Text("Model: %s", text.c_str());
+		Editor::GetDialogResource<Model>(model, "ModelDialog", "Open Model", "Model (*.obj; *.fbx; *.glb){.obj,.fbx,.glb},.*");
+		
+		text = (material) ? material->name : "MaterialRenderer";
+		ImGui::Text("Material: %s", text.c_str());
+		Editor::GetDialogResource<Material>(material, "MaterialDialog", "Open Material", "Material (*.mat){.mat},.*");
+
+		if (material) {
 			material->UpdateGUI();
 		}
 	}

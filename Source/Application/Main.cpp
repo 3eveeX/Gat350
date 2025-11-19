@@ -1,3 +1,4 @@
+
 int main(int argc, char* argv[]) {
     neu::file::SetCurrentDirectory("Assets");
     LOG_INFO("current directory {}", neu::file::GetCurrentDirectory());
@@ -8,6 +9,10 @@ int main(int argc, char* argv[]) {
 
     SDL_Event e;
     bool quit = false;
+
+	auto renderTexture = std::make_shared<neu::RenderTexture>();
+	renderTexture->Create(512, 512);
+	neu::Resources().AddResource<neu::RenderTexture>("renderTexture", renderTexture);
 
     auto scene = std::make_unique<neu::Scene>();
     scene->Load("scenes/scene03.json");
