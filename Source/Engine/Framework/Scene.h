@@ -314,7 +314,8 @@ namespace neu {
         /// </summary>
         std::list<std::unique_ptr<Actor>> m_actors;
 
-        glm::vec3 m_ambientLight{0.2f, 0.2f, 0.2f};
+        glm::vec3 m_ambientLight{0.67f, 0.67f, 0.67f};
+        bool m_postprocess;
     };
 
     // ============================================================================
