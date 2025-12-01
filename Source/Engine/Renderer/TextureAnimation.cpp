@@ -78,8 +78,8 @@ namespace neu {
 		glm::ivec2 size = GetSize();
 
 		// Set frame dimensions
-		frameRect.w = size.x;
-		frameRect.h = size.y;
+		frameRect.w = (float)size.x;
+		frameRect.h = (float)size.y;
 
 		// Calculate frame position in the sprite sheet grid
 		// Add start_frame offset to support multiple animations in one sheet

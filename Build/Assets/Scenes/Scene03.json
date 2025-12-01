@@ -1,6 +1,31 @@
 {
 	"actors": [
 		{
+			"name": "light",
+			"persistent": true,
+			"transform": {
+				"position": [ 0, 10, 0 ],
+				"rotation": [ -90, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "LightComponent",
+					"lightType": "directional",
+					"intensity": 1.0,
+					"range": 40,
+					"color": [ 1, 1, 1 ],
+					"shadowCaster": true
+				},
+				{
+					"type": "CameraComponent",
+					"projectionType": "orthographic",
+					"outputTexture": "shadowTexture",
+					"shadowCamera": true
+				}
+			]
+		},
+		{
 			"name": "spot",
 			"persistent": true,
 			"transform": {
@@ -24,7 +49,7 @@
 			"name": "Crate",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 0 ],
+				"position": [ -1, 0.5, 0 ],
 				"rotation": [ 0, 180, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
@@ -40,7 +65,7 @@
 			"name": "Window",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 0 ],
+				"position": [ 2, 1, 0 ],
 				"rotation": [ 0, 0, 0 ],
 				"scale": [ 1, 1, 1 ]
 			},
@@ -129,31 +154,6 @@
 
 				}
 
-			]
-		},
-		{
-			"name": "light",
-			"persistent": true,
-			"transform": {
-				"position": [ 0, 10, 0 ],
-				"rotation": [ 45, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "LightComponent",
-					"lightType": "directional",
-					"intensity": 1.0,
-					"range": 40,
-					"color": [ 1, 1, 1 ],
-					"shadowCaster": true
-				},
-				{
-					"type": "CameraComponent",
-					"projectionType": "orthographic",
-					"outputTexture": "shadowTexture",
-					"shadowCamera": true
-				}
 			]
 		}
 	]

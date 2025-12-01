@@ -43,7 +43,7 @@ namespace neu
 
 		textureName = "";
 		SERIAL_READ_NAME(document, "shadowMap", textureName);
-		if(!textureName.empty())cubeMap = Resources().Get<Texture>(textureName);
+		if(!textureName.empty())shadowMap = Resources().Get<Texture>(textureName);
 
 		SERIAL_READ(document, baseColor);
 		SERIAL_READ(document, emissiveColour);

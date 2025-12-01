@@ -7,7 +7,7 @@ class Program;
 class Texture;
 
 namespace neu {
-	class Material : public Resource, GUI
+	class Material : public Resource
 	{
 	public:
 		enum class Parameters : uint32_t
