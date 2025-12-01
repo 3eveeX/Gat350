@@ -19,6 +19,7 @@ namespace neu {
 		program.SetUniform(name + ".type", static_cast<int>(type));
 		program.SetUniform(name + ".outerCutoff", glm::radians(outerCutoff));
 		program.SetUniform(name + ".innerCutoff", glm::radians(innerCutoff));
+		program.SetUniform(name + ".shadowCaster", shadowCaster);
 	}
 	void LightComponent::Read(const serial_data_t& value)
 	{
@@ -36,6 +37,8 @@ namespace neu {
 		SERIAL_READ(value, range);
 		SERIAL_READ(value, outerCutoff);
 		SERIAL_READ(value, innerCutoff);
+
+		SERIAL_READ(value, shadowCaster);
 	}
 	void LightComponent::UpdateGUI()
 	{
@@ -51,5 +54,7 @@ namespace neu {
 			ImGui::DragFloat("Outer Cutoff", &outerCutoff, 0.1f, 0.0f);
 			ImGui::DragFloat("Inner Cutoff", &innerCutoff, 0.1f, 0.0f, outerCutoff);
 		}
+
+		ImGui::Checkbox("Shadow Caster", &shadowCaster);
 	}
 }

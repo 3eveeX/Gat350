@@ -1,6 +1,7 @@
 {
-	"program": "Shaders/basic_phong.prog",
+	"program": "Shaders/basic_phong_shadow.prog",
 	"baseMap": "Textures/cow.jpg",
+	"shadowMap": "shadowTexture",
 	"baseColor": [ 1, 1, 1 ],
 	"shininess": 2.0,
 	"tiling": [ 1.0, 1.0 ],

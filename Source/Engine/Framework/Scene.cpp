@@ -109,6 +109,24 @@ namespace neu {
         }
 
         std::vector<Program*> programs(programSet.begin(), programSet.end());
+
+        //set shadow view projection
+                // get shadow camera projection view matrix
+        auto shadowCamera = std::find_if(cameras.begin(), cameras.end(),
+            [](auto camera) { return camera->shadowCamera; });
+        if (*shadowCamera) {
+            glm::mat4 biasMatrix(
+                0.5, 0.0, 0.0, 0.0,
+                0.0, 0.5, 0.0, 0.0,
+                0.0, 0.0, 0.5, 0.0,
+                0.5, 0.5, 0.5, 1.0
+            );
+            glm::mat4 shadowvp = biasMatrix * (*shadowCamera)->projection * (*shadowCamera)->view;
+            for (auto& program : programs) {
+                program->Use();
+                program->SetUniform("u_shadow_vp", shadowvp);
+            }
+        }
         
         for (auto& camera : cameras) {
 			PostProcessComponent* postprocess = camera->owner->GetComponent<PostProcessComponent>();
@@ -121,6 +139,9 @@ namespace neu {
             }
             
 			camera->Clear();
+
+
+
             DrawPass(renderer,
                 programs,
                 lights,
@@ -131,9 +152,12 @@ namespace neu {
             }
 
             if (renderToTexture && postprocess) {
+                camera->Clear(); // <-- add
+
                 auto postProcessProgram = Resources().Get<Program>("shaders/postprocess.prog");
                 postProcessProgram->Use();
                 postprocess->Apply(*postProcessProgram);
+                camera->outputTexture->Bind();
                 auto actor = GetActorByName("postprocess");
                 actor->Draw(renderer);
             }

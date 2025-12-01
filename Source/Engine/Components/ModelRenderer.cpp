@@ -24,6 +24,18 @@ namespace neu
 		}
 	}
 
+	void ModelRenderer::DrawShadow(Renderer& renderer, Program& program)
+	{
+		program.SetUniform("u_model", owner->transform.GetMatrix());
+
+		glDepthMask(enableDepth);
+		glCullFace(cullFace); 
+
+		if (model) {
+			model->Draw(GL_TRIANGLES);
+		}
+	}
+
 	void neu::ModelRenderer::Read(const serial_data_t& value)
 	{
 		Object::Read(value);

@@ -174,12 +174,15 @@ namespace neu {
         requires std::derived_from<T, Resource>
     inline bool ResourceManager::AddResource(const std::string& name, const res_t<T> resource)
     {
-		auto iter = m_resources.find(toLower(name));
+		std::string key = toLower(name);
+		auto iter = m_resources.find(key);
         if (iter != m_resources.end()) {
 			LOG_WARNING("Resource already exists: {}", name);
             return false;
         }
-        m_resources[toLower(name)] = resource;
+
+        resource->name = key;
+        m_resources[key] = resource;
 
         return true;
     }

@@ -1,24 +1,6 @@
 {
 	"actors": [
 		{
-			"name": "skybox",
-			"persistent": true,
-			"transform": {
-				"position": [ 0, 0, 0 ],
-				"rotation": [ 0, 0, 0 ],
-				"scale": [ 1, 1, 1 ]
-			},
-			"components": [
-				{
-					"type": "ModelRenderer",
-					"model": "models/cube.obj",
-					"material": "materials/skybox.mat",
-					"enableDepth": false,
-					"cullFace": "front"
-				}
-			]
-		},
-		{
 			"name": "spot",
 			"persistent": true,
 			"transform": {
@@ -30,7 +12,7 @@
 				{
 					"type": "ModelRenderer",
 					"model": "models/spot.obj",
-					"material": "materials/refraction.mat"
+					"material": "materials/spot.mat"
 				},
 				{
 					"type": "RotationComponent",
@@ -66,14 +48,14 @@
 				{
 					"type": "ModelRenderer",
 					"model": "models/quad.obj",
-					"material": "materials/rtt.mat"
+					"material": "materials/shadow.mat"
 				}
 			]
 		},
 		{
 			"name": "postprocess",
 			"persistent": true,
-      "active": false,
+			"active": false,
 			"transform": {
 				"position": [ 0, 0, 0 ],
 				"rotation": [ 0, 0, 0 ],
@@ -88,6 +70,22 @@
 			]
 		},
 		{
+			"name": "plane",
+			"persistent": true,
+			"transform": {
+				"position": [ 0, -1, 0 ],
+				"rotation": [ 0, 0, 0 ],
+				"scale": [ 1, 1, 1 ]
+			},
+			"components": [
+				{
+					"type": "ModelRenderer",
+					"model": "models/plane.obj",
+					"material": "materials/rocks.mat"
+				}
+			]
+		},
+		{
 			"name": "camera_rtt",
 			"persistent": true,
 			"transform": {
@@ -98,7 +96,7 @@
 			"components": [
 				{
 					"type": "CameraComponent",
-          "outputTexture": "renderTexture"
+					"outputTexture": "renderTexture"
 				},
 				{
 					"type": "FirstPersonController",
@@ -144,7 +142,17 @@
 			"components": [
 				{
 					"type": "LightComponent",
-					"color": [ 1, 1, 1 ]
+					"lightType": "directional",
+					"intensity": 1.0,
+					"range": 40,
+					"color": [ 1, 1, 1 ],
+					"shadowCaster": true
+				},
+				{
+					"type": "CameraComponent",
+					"projectionType": "orthographic",
+					"outputTexture": "shadowTexture",
+					"shadowCamera": true
 				}
 			]
 		}

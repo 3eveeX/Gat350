@@ -18,6 +18,7 @@ namespace neu {
 			EmissiveMap = (1 << 2),
 			NormalMap   = (1 << 3),
 			CubeMap		= (1 << 4),
+			ShadowMap   = (1 << 5),
 		};
 
 	public:
@@ -41,7 +42,8 @@ namespace neu {
 		res_t<Texture> emissiveMap;
 		glm::vec3 emissiveColour{ 0, 0, 0 };
 		res_t<Texture> normalMap;
-		res_t<Cubemap> cubeMap;
+		res_t<Texture> cubeMap;
+		res_t<Texture> shadowMap;
 		bool useNormalMap{ false };
 		res_t<Program> program;
 

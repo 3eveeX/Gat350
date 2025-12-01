@@ -1,0 +1,4 @@
+{
+	"vertex_shader": "shaders/basic_phong_shadow.vert",
+	"fragment_shader": "shaders/basic_phong_shadow.frag"
+}

@@ -6,8 +6,14 @@ namespace neu {
 
 	void CameraComponent::Update(float dt)
 	{
-		view = glm::lookAt(owner->transform.position, owner->transform.position + owner->transform.Forward(), owner->transform.Up());
-		projection = glm::perspective(glm::radians(fov), aspect, near, far);
+
+
+		view = (shadowCamera)
+			? glm::lookAt(owner->transform.position, owner->transform.position - owner->transform.Forward(), owner->transform.Up())
+			: glm::lookAt(owner->transform.position, owner->transform.position + owner->transform.Forward(), owner->transform.Up());
+		projection = (projectionType == ProjectionType::Perspective)
+			? glm::perspective(glm::radians(fov), aspect, near, far)
+			: glm::ortho(-size * aspect, size * aspect, -size, size, near, far);
 	}
 
 	void CameraComponent::Clear()
@@ -45,10 +51,20 @@ namespace neu {
 		if (!SERIAL_READ(value, aspect)) aspect = GetEngine().GetRenderer().GetWidth() / (float)GetEngine().GetRenderer().GetHeight();
 		SERIAL_READ(value, near);
 		SERIAL_READ(value, far);
+		SERIAL_READ(value, size);
 
 		SERIAL_READ(value, clearColourBuffer);
 		SERIAL_READ(value, clearDepthBuffer);
 		SERIAL_READ(value, backgroundColour);
+
+		SERIAL_READ(value, shadowCamera);
+		std::string projType;
+		SERIAL_READ_NAME(value, "projectionType", projType);
+		if (equalsIgnoreCase(projType, "perspective"))
+			projectionType = ProjectionType::Perspective;
+		else if (equalsIgnoreCase(projType, "orthographic"))
+			projectionType = ProjectionType::Orthographic;
+
 
 		std::string outputTextureName;
 		SERIAL_READ_NAME(value, "outputTexture", outputTextureName);
@@ -59,7 +75,18 @@ namespace neu {
 	}
 	void CameraComponent::UpdateGUI()
 	{
-		ImGui::DragFloat("FOV", &fov, 0.1f, 10.0f, 100.0f);
+		const char* types[] = { "Perspective", "Orthographic" };
+		ImGui::Combo("Projection Type", (int*)&projectionType, types, 2);
+
+		if (projectionType == ProjectionType::Perspective)
+		{
+			ImGui::DragFloat("FOV", &fov, 0.1f, 10.0f, 100.0f);
+		}
+		else if (projectionType == ProjectionType::Orthographic)
+		{
+			ImGui::DragFloat("Size", &size, 0.1f, 1.0f);
+		}
+
 		ImGui::InputFloat("Aspect", &aspect, 0.1f);
 		ImGui::InputFloat("Near", &near, 0.1f);
 		ImGui::InputFloat("Far", &far, 0.1f);
